@@ -4,16 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@yield('title', 'Página Principal')</title>
-
-    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
-    
-    <!-- Iconos -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <!-- Estilos -->
     <style>
         :root {
             --primary-color: #2a3990;
@@ -197,7 +191,6 @@
             animation: breathe 6s ease-in-out infinite 3s;
         }
         
-        /* Decorative elements */
         .deco-circle {
             position: absolute;
             border-radius: 50%;
@@ -223,7 +216,6 @@
             animation: float 13s ease-in-out infinite 2s;
         }
         
-        /* Navbar styles */
         .navbar {
             background-color: var(--light-color);
             border-radius: 50px;
@@ -277,7 +269,6 @@
             box-shadow: 0 5px 15px rgba(42, 57, 144, 0.3);
         }
         
-        /* Content styling */
         .container h2 {
             font-family: 'Cormorant Garamond', serif;
             font-weight: 600;
@@ -292,7 +283,6 @@
             line-height: 1.8;
         }
         
-        /* Loading indicator */
         .page-transition {
             position: fixed;
             top: 0;
@@ -321,7 +311,6 @@
             animation: spin 1s ease-in-out infinite;
         }
         
-        /* Responsive styles */
         @media (max-width: 768px) {
             h1 {
                 font-size: 2.4rem;
@@ -351,7 +340,6 @@
     </style>
 </head>
 <body>
-    <!-- Page transition overlay -->
     <div class="page-transition">
         <div class="loader"></div>
     </div>
@@ -363,7 +351,6 @@
     <x-navbar />
 
     <div class="container">
-        <!-- Decorative elements -->
         <div class="deco-circle"></div>
         <div class="deco-circle"></div>
         
@@ -371,9 +358,7 @@
     </div>
 
     <script>
-        // Script para manejar transiciones de página y navegación activa
         document.addEventListener('DOMContentLoaded', function() {
-            // Configurar navegación activa
             const currentPath = window.location.pathname;
             const navLinks = document.querySelectorAll('.navbar a');
             
@@ -382,7 +367,6 @@
                     link.classList.add('active');
                 }
                 
-                // Añadir transición de página al hacer clic
                 link.addEventListener('click', function(e) {
                     if(link.getAttribute('href') !== currentPath) {
                         e.preventDefault();
@@ -396,13 +380,11 @@
                 });
             });
             
-            // Animación de entrada
             const pageTransition = document.querySelector('.page-transition');
             setTimeout(function() {
                 pageTransition.style.transform = 'translateY(-100%)';
             }, 300);
             
-            // Animación para elementos dentro del contenedor
             const content = document.querySelector('.container');
             if(content) {
                 const children = content.children;
