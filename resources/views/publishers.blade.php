@@ -1,6 +1,6 @@
 <div class="publishers-container">
 <h1>Publishers Page</h1>
-<button id="reset-btn">
+<button id="back-link">
         <a href="/">Regresar</a>
 </button>
     
@@ -80,6 +80,44 @@
         text-align: center;
         border-left: 4px solid #4a6cf7;
         animation: slideInLeft 0.8s ease-out;
+    }
+    .back-link {
+        display: block;
+        max-width: 900px;
+        margin: 0 auto 2rem;
+        background-color: #ffffff;
+        border-radius: 12px;
+        padding: 0.8rem;
+        text-align: center;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .back-link:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+    }
+    .back-link a {
+        text-decoration: none;
+        color: #4a6cf7;
+        font-weight: 600;
+        font-size: 1.1rem;
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        display: inline-block;
+        position: relative;
+    }
+    .back-link a::before {
+        content: "←";
+        margin-right: 8px;
+        transition: transform 0.3s;
+    }
+    .back-link a:hover {
+        color: #1e40af;
+        background-color: rgba(74, 108, 247, 0.08);
+    }
+    .back-link a:hover::before {
+        transform: translateX(-5px);
     }
     
     .book-container {
