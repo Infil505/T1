@@ -374,7 +374,6 @@
         box-shadow: 0 5px 10px rgba(74, 108, 247, 0.3);
     }
     
-    /* Responsive */
     @media (max-width: 768px) {
         .authors-container {
             padding: 1rem;
@@ -418,10 +417,8 @@ document.addEventListener('DOMContentLoaded', () => {
     let seconds = 0;
     let gameStarted = false;
     
-    // Inicializar juego
     shuffleCards();
     
-    // Event listeners
     restartBtn.addEventListener('click', resetGame);
     playAgainBtn.addEventListener('click', () => {
         winModal.classList.remove('show');

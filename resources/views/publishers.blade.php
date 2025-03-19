@@ -372,8 +372,6 @@
             book.style.backgroundColor = colors[index];
             book.style.borderLeftColor = darkenColor(colors[index], 20);
             book.style.borderRightColor = darkenColor(colors[index], 20);
-            
-            // Add title label visually in the CSS ::after pseudo-element
         });
 
         function darkenColor(color, amount) {
@@ -406,11 +404,9 @@
         function startGame() {
             if (isPlaying) return;
             
-            // Add starting animation to button
             startBtn.classList.add('success-animation');
             setTimeout(() => startBtn.classList.remove('success-animation'), 500);
             
-            // Stagger the book animations
             books.forEach((book, index) => {
                 book.style.opacity = '0';
                 setTimeout(() => {
@@ -426,25 +422,18 @@
             timerEl.textContent = timeLeft;
             gameInterval = setInterval(updateTimer, 1000);
             
-            // Clear any books from shelves
             books.forEach(book => bookContainer.appendChild(book));
         }
 
         function resetGame() {
             clearInterval(gameInterval);
-            
-            // Add animation to reset button
             resetBtn.classList.add('success-animation');
             setTimeout(() => resetBtn.classList.remove('success-animation'), 500);
-            
-            // Return books to container with animation
             books.forEach((book, index) => {
                 setTimeout(() => {
                     book.style.transition = 'all 0.5s ease';
                     book.style.transform = 'translateY(0) rotate(0)';
                     bookContainer.appendChild(book);
-                    
-                    // Reset book appearance after moving
                     setTimeout(() => {
                         book.style.opacity = '1';
                         book.style.transform = 'none';
@@ -469,8 +458,6 @@
             }
             timeLeft--;
             timerEl.textContent = timeLeft;
-            
-            // Add pulsing effect when time is running low
             if (timeLeft <= 10) {
                 timerEl.style.color = '#e53e3e';
                 timerEl.style.animation = 'pulse 0.5s infinite';
@@ -486,7 +473,6 @@
                 draggedBook = book;
                 e.dataTransfer.setData('text/plain', e.target.id);
                 
-                // Add dragging class for visual feedback
                 setTimeout(() => {
                     book.classList.add('dragging');
                 }, 0);
@@ -524,27 +510,22 @@
                 
                 if (!book) return;
                 
-                // Add success animation
                 book.classList.add('success-animation');
                 setTimeout(() => book.classList.remove('success-animation'), 500);
-                
-                // Append with animation
                 book.style.transform = 'translateY(0) rotate(0)';
                 shelf.appendChild(book);
                 
                 score++;
                 scoreEl.textContent = score;
                 
-                // Add score animation
                 scoreEl.classList.add('success-animation');
                 setTimeout(() => scoreEl.classList.remove('success-animation'), 500);
                 
                 if (score === 5) {
                     clearInterval(gameInterval);
                     isPlaying = false;
-                    createConfetti(); // Celebration effect
+                    createConfetti();
                     
-                    // Show winning effect
                     setTimeout(() => {
                         const victoryMessage = document.createElement('div');
                         victoryMessage.textContent = '¡Felicidades! ¡Has completado el juego!';
@@ -576,7 +557,6 @@
         startBtn.addEventListener('click', startGame);
         resetBtn.addEventListener('click', resetGame);
         
-        // Add keyframes for confetti
         const style = document.createElement('style');
         style.type = 'text/css';
         style.innerHTML = `
