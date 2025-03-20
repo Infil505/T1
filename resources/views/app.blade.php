@@ -345,7 +345,7 @@
     </div>
 
     <header>
-        <h1>@yield('title', 'Página Principal')</h1>
+        <h1>@yield('title', 'Página Principal(MAIN)')</h1>
     </header>
 
     <x-navbar />
