@@ -479,6 +479,17 @@
                     </div>
                 </div>
 
+                <div class="publisher-meta">
+                    <div class="meta-row">
+                        <span class="meta-label">Fundada en:</span>
+                        <span class="meta-value">{{ $editorial['founded'] }}</span>
+                    </div>
+                    <div class="meta-row">
+                        <span class="meta-label">Género:</span>
+                        <span class="meta-value">{{ $editorial['genere'] }}</span>
+                    </div>
+                </div>
+
                 <div class="publisher-books">
                     <h3>Libros publicados</h3>
                     <ul class="books-list">

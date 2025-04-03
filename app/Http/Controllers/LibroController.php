@@ -1,9 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Data\BibliotecaData;
 
-use Illuminate\Http\Request;
+use App\Data\BibliotecaData;
 
 class LibroController extends Controller
 {
@@ -18,12 +17,12 @@ class LibroController extends Controller
             $editorial = collect($editoriales)->firstWhere('id', $libro['publisher_id']);
 
             return [
-                'id' => $libro['id'] ?? null,
-                'title' => $libro['title'] ?? 'Sin título',
-                'edition' => $libro['edition'] ?? 'N/A',
-                'copyright' => $libro['copyright'] ?? 'N/A',
-                'language' => $libro['language'] ?? 'N/A',
-                'pages' => $libro['pages'] ?? 'N/A',
+                'id' => $libro['id'],
+                'title' => $libro['title'],
+                'edition' => $libro['edition'],
+                'copyright' => $libro['copyright'],
+                'language' => $libro['language'],
+                'pages' => $libro['pages'],
                 'author' => $autor['author'] ?? 'Desconocido',
                 'publisher' => $editorial['publisher'] ?? 'Desconocida',
             ];
