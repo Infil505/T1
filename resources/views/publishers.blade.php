@@ -461,16 +461,15 @@
 </head>
 <body>
     <header>
-        <h1>Catálogo de Editoriales</h1>
-        <p class="subtitle">Descubre las mejores editoriales literarias y sus publicaciones destacadas</p>
+        <h1>PUBLISHERS</h1>
     </header>
-    
+
     <x-navbar />
-    
+
     <div class="container">
         <div class="publishers-grid">
             @foreach ($editoriales as $index => $editorial)
-            <div class="publisher-card" style="--animation-order: {{ $index + 1 }}">
+            <div class="publisher-card" style="--animation-order: {{ $index + 1 }};">
                 <div class="publisher-header">
                     <h2 class="publisher-title">{{ $editorial['publisher'] }}</h2>
                     <div class="book-icon">
@@ -479,32 +478,27 @@
                         </svg>
                     </div>
                 </div>
-                
-                <div class="publisher-meta">
-                    <div class="meta-row">
-                        <span class="meta-label">Fundada en</span>
-                        <span class="meta-value">{{ $editorial['founded'] }}</span>
-                    </div>
-                </div>
-                
+
                 <div class="publisher-books">
                     <h3>Libros publicados</h3>
                     <ul class="books-list">
                         @foreach ($editorial['books'] as $libro)
-                        <li>{{ $libro['title'] }}</li>
+                            <li>
+                                <strong>{{ $libro['title'] }}</strong><br>
+                                <small>Autor: {{ $libro['author'] }}</small>
+                            </li>
                         @endforeach
                     </ul>
                 </div>
-                
+
                 <div class="publisher-footer">
-                    <span class="genre-badge">{{ $editorial['genre'] }}</span>
                     <span class="country-badge">{{ $editorial['country'] }}</span>
                 </div>
             </div>
             @endforeach
         </div>
     </div>
-    
+
     <footer>
         <div class="footer-content">
             <p>&copy; 2025 Catálogo de Editoriales. Todos los derechos reservados.</p>

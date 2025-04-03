@@ -3,36 +3,33 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Data\BibliotecaData;
 
 class EditorialControlle extends Controller
 {
-    private $editoriales = [
-        [
-            'id' => 1,
-            'publisher' => 'John Wiley & Sons',
-            'country' => 'United States',
-            'founded' => 1807,
-            'genre' => 'Academic',
-            'books' => [
-                ['book_id' => 1, 'title' => 'Operating System Concepts'],
-                ['book_id' => 2, 'title' => 'Database System Concepts'],
-            ],
-        ],
-        [
-            'id' => 2,
-            'publisher' => 'Pearson Education',
-            'country' => 'United Kingdom',
-            'founded' => 1844,
-            'genre' => 'Education',
-            'books' => [
-                ['book_id' => 3, 'title' => 'Computer Networks'],
-                ['book_id' => 4, 'title' => 'Modern Operating Systems'],
-            ],
-        ],
-    ];
-
     public function index()
     {
-        return view('publishers', ['editoriales' => $this->editoriales]);
+        $editoriales = BibliotecaData::editoriales();
+        $libros = BibliotecaData::libros();
+        $autores = BibliotecaData::autores();
+
+        // Relacionar libros con editorial y autor
+        $editorialesConLibros = collect($editoriales)->map(function ($editorial) use ($libros, $autores) {
+            $librosDeEditorial = collect($libros)
+                ->where('publisher_id', $editorial['id'])
+                ->map(function ($libro) use ($autores) {
+                    $autor = collect($autores)->firstWhere('id', $libro['author_id']);
+                    return [
+                        'title' => $libro['title'],
+                        'author' => $autor['author'] ?? 'Desconocido',
+                    ];
+                })->values();
+        
+            $editorial['books'] = $librosDeEditorial;
+            return $editorial;
+        });        
+
+        return view('publishers', ['editoriales' => $editorialesConLibros]);
     }
 }
+

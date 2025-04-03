@@ -533,8 +533,7 @@
 </head>
 <body>
     <header>
-        <h1>Autores Literarios</h1>
-        <p class="subtitle">Descubre a los grandes escritores y sus obras más importantes</p>
+        <h1>Autores</h1>
     </header>
     
     <x-navbar />
@@ -542,32 +541,32 @@
     <div class="container">
         <div class="autores-grid">
             @foreach ($autores as $index => $autor)
-            <div class="autor-card" style="--animation-order: {{ $index + 1 }}">
-                <div class="autor-header">
-                    <h2 class="autor-name">{{ $autor['author'] }}</h2>
-                    <div class="pen-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22" fill="#2a3990">
-                            <path d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z"/>
-                        </svg>
-                    </div>
-                </div>
-                
-                <div class="autor-meta">
-                    <div class="meta-row">
-                        <span class="meta-label">Nacionalidad</span>
-                        <span class="meta-value">{{ $autor['nationality'] }}</span>
+                <div class="autor-card" style="--animation-order: {{ $index + 1 }}">
+                    <div class="autor-header">
+                        <h2 class="autor-name">{{ $autor['author'] }}</h2>
+                        <div class="pen-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22" fill="#2a3990">
+                                <path d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z"/>
+                            </svg>
+                        </div>
                     </div>
                     
-                    <div class="meta-row">
-                        <span class="meta-label">Especialidades</span>
-                        <span class="meta-value">{{ $autor['fields'] }}</span>
+                    <div class="autor-meta">
+                        <div class="meta-row">
+                            <span class="meta-label">Nacionalidad</span>
+                            <span class="meta-value">{{ $autor['nationality'] }}</span>
+                        </div>
+                        
+                        <div class="meta-row">
+                            <span class="meta-label">Especialidades</span>
+                            <span class="meta-value">{{ $autor['fields'] }}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="autor-footer">
+                        <button class="ver-mas-btn" onclick='mostrarDetalle(@json($autor))'>Ver perfil completo</button>
                     </div>
                 </div>
-                
-                <div class="autor-footer">
-                    <button class="ver-mas-btn" onclick='mostrarDetalle(@json($autor))'>Ver perfil completo</button>
-                </div>
-            </div>
             @endforeach
         </div>
         
@@ -614,9 +613,10 @@
             
             const librosList = document.getElementById('libros');
             librosList.innerHTML = '';
+            
             autor.books.forEach(libro => {
                 const li = document.createElement('li');
-                li.innerText = libro.title;
+                li.innerHTML = `<strong>${libro.title}</strong><br><small>Editorial: ${libro.editorial}</small>`;
                 librosList.appendChild(li);
             });
             

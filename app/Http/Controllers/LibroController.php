@@ -1,64 +1,34 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Data\BibliotecaData;
 
 use Illuminate\Http\Request;
 
 class LibroController extends Controller
 {
-    private $libros = [
-        [
-            'id' => 1,
-            'title' => 'Operating System Concepts',
-            'edition' => '9th',
-            'copyright' => 2012,
-            'language' => 'ENGLISH',
-            'pages' => 976,
-            'author' => 'Abraham Silberschatz',
-            'author_id' => 1,
-            'publisher' => 'John Wiley & Sons',
-            'publisher_id' => 1,
-        ],
-        [
-            'id' => 2,
-            'title' => 'Database System Concepts',
-            'edition' => '6th',
-            'copyright' => 2010,
-            'language' => 'ENGLISH',
-            'pages' => 1376,
-            'author' => 'Abraham Silberschatz',
-            'author_id' => 1,
-            'publisher' => 'John Wiley & Sons',
-            'publisher_id' => 1,
-        ],
-        [
-            'id' => 3,
-            'title' => 'Computer Networks',
-            'edition' => '5th',
-            'copyright' => 2010,
-            'language' => 'ENGLISH',
-            'pages' => 960,
-            'author' => 'Andrew S. Tanenbaum',
-            'author_id' => 2,
-            'publisher' => 'Pearson Education',
-            'publisher_id' => 2,
-        ],
-        [
-            'id' => 4,
-            'title' => 'Modern Operating Systems',
-            'edition' => '4th',
-            'copyright' => 2014,
-            'language' => 'ENGLISH',
-            'pages' => 1136,
-            'author' => 'Andrew S. Tanenbaum',
-            'author_id' => 2,
-            'publisher' => 'Pearson Education',
-            'publisher_id' => 2,
-        ],
-    ];
-
     public function index()
     {
-        return view('books', ['libros' => $this->libros]);
+        $libros = BibliotecaData::libros();
+        $autores = BibliotecaData::autores();
+        $editoriales = BibliotecaData::editoriales();
+
+        $librosConDatos = collect($libros)->map(function ($libro) use ($autores, $editoriales) {
+            $autor = collect($autores)->firstWhere('id', $libro['author_id']);
+            $editorial = collect($editoriales)->firstWhere('id', $libro['publisher_id']);
+
+            return [
+                'id' => $libro['id'] ?? null,
+                'title' => $libro['title'] ?? 'Sin título',
+                'edition' => $libro['edition'] ?? 'N/A',
+                'copyright' => $libro['copyright'] ?? 'N/A',
+                'language' => $libro['language'] ?? 'N/A',
+                'pages' => $libro['pages'] ?? 'N/A',
+                'author' => $autor['author'] ?? 'Desconocido',
+                'publisher' => $editorial['publisher'] ?? 'Desconocida',
+            ];
+        });
+
+        return view('books', ['libros' => $librosConDatos]);
     }
 }

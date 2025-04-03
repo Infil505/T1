@@ -1,39 +1,35 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Data\BibliotecaData;
 
 use Illuminate\Http\Request;
 
 class AutorController extends Controller
 {
-    private $autores = [
-        [
-            'id' => 1,
-            'author' => 'Abraham Silberschatz',
-            'nationality' => 'Israelis / American',
-            'birth_year' => 1952,
-            'fields' => 'Database Systems, Operating Systems',
-            'books' => [
-                ['title' => 'Operating System Concepts'],
-                ['title' => 'Database System Concepts'],
-            ],
-        ],
-        [
-            'id' => 2,
-            'author' => 'Andrew S. Tanenbaum',
-            'nationality' => 'Dutch / American',
-            'birth_year' => 1944,
-            'fields' => 'Distributed computing, Operating Systems',
-            'books' => [
-                ['title' => 'Computer Networks'],
-                ['title' => 'Modern Operating Systems'],
-            ],
-        ],
-    ];
-
     public function index()
     {
-        // 👇 Esta línea pasa la variable $autores a la vista
-        return view('authors', ['autores' => $this->autores]);
+        $autores = BibliotecaData::autores();
+        $libros = BibliotecaData::libros();
+        $editoriales = BibliotecaData::editoriales();
+    
+        // Recorremos autores y les agregamos los libros con editorial
+        $autoresConLibros = collect($autores)->map(function ($autor) use ($libros, $editoriales) {
+            $autorLibros = collect($libros)
+                ->where('author_id', $autor['id'])
+                ->map(function ($libro) use ($editoriales) {
+                    $editorial = collect($editoriales)->firstWhere('id', $libro['publisher_id']);
+                    return [
+                        'title' => $libro['title'],
+                        'editorial' => $editorial['publisher'] ?? 'Desconocida',
+                    ];
+                })->values();
+    
+            $autor['books'] = $autorLibros;
+            return $autor;
+        });
+    
+        return view('authors', ['autores' => $autoresConLibros]);
     }
+    
 }

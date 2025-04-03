@@ -485,8 +485,8 @@
 </head>
 <body>
     <header>
-        <h1>Mi Biblioteca Literaria</h1>
-        <p class="subtitle">Un viaje por mundos de conocimiento y fantasía a través de la lectura</p>
+        <h1>BOOKS</h1>
+
     </header>
     
     <x-navbar />
