@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Editorial;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class EditorialControlle extends Controller
 {
@@ -15,12 +16,18 @@ class EditorialControlle extends Controller
     public function index()
     {
         $editoriales = Editorial::all();
-        return view('publisher.index', compact('editoriales'));
+        return Inertia::render('publishers/index', [
+            'editoriales' => $editoriales,
+            'user' => auth()->user(),
+            'flash' => session('success') ? ['success' => session('success')] : [],
+        ]);
     }
 
     public function create()
     {
-        return view('publisher.create');
+        return Inertia::render('publishers/create', [
+            'errors' => session('errors'),
+        ]);
     }
 
     public function store(Request $request)
@@ -39,13 +46,18 @@ class EditorialControlle extends Controller
     public function show($id)
     {
         $editorial = Editorial::with('libros')->findOrFail($id);
-        return view('publisher.show', compact('editorial'));
+        return Inertia::render('publishers/show', [
+            'editorial' => $editorial
+        ]);
     }
 
     public function edit($id)
     {
         $editorial = Editorial::findOrFail($id);
-        return view('publisher.edit', compact('editorial'));
+        return Inertia::render('publishers/edit', [
+            'editorial' => $editorial,
+            'errors' => session('errors'),
+        ]);
     }
 
     public function update(Request $request, $id)

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Autor;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class AutorController extends Controller
 {
@@ -14,16 +15,22 @@ class AutorController extends Controller
     }
 
     public function index()
-{
-    $autores = Autor::all();
-    return view('authors.index', compact('autores')); // ✅ Laravel buscará "resources/views/authors/index.blade.php"
-}
+    {
+        $autores = Autor::all();
+        return Inertia::render('authors/index', [
+            'autores' => $autores,
+            'user' => auth()->user(),
+            'flash' => session('success') ? ['success' => session('success')] : [],
+        ]);
+    }
 
-
+    /*
     public function create()
     {
-        return view('authors.create'); // vista: resources/views/authors/create.blade.php
-    }
+        return Inertia::render('authors/create', [
+            'errors' => session('errors'),
+        ]);
+    }*/
 
     public function store(Request $request)
     {
@@ -41,13 +48,18 @@ class AutorController extends Controller
     public function show($id)
     {
         $autor = Autor::with('libros')->findOrFail($id);
-        return view('authors.show', compact('autor')); // vista: resources/views/authors/show.blade.php
+        return Inertia::render('authors/show', [
+            'autor' => $autor
+        ]);
     }
 
     public function edit($id)
     {
         $autor = Autor::findOrFail($id);
-        return view('authors.edit', compact('autor')); // vista: resources/views/authors/edit.blade.php
+        return Inertia::render('authors/edit', [
+            'autor' => $autor,
+            'errors' => session('errors'),
+        ]);
     }
 
     public function update(Request $request, $id)

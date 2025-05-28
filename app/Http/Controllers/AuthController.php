@@ -5,13 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Inertia\Inertia;
 use App\Models\User;
 
 class AuthController extends Controller
 {
     public function showLoginForm()
     {
-        return view('auth.login');
+        return Inertia::render('auth/login');
     }
 
     public function login(Request $request)
@@ -49,14 +50,12 @@ class AuthController extends Controller
             'password' => ['required', 'confirmed', 'min:6'],
         ]);
 
-
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'is_admin' => false, 
+            'is_admin' => false,
         ]);
-
 
         Auth::login($user);
 

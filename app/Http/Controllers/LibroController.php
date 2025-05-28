@@ -6,6 +6,7 @@ use App\Models\Libro;
 use App\Models\Autor;
 use App\Models\Editorial;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class LibroController extends Controller
 {
@@ -17,15 +18,23 @@ class LibroController extends Controller
     public function index()
     {
         $libros = Libro::with(['autor', 'editorial'])->get();
-        return view('book.index', compact('libros'));
+        return Inertia::render('books/index', [
+            'libros' => $libros,
+            'user' => auth()->user(),
+            'flash' => session('success') ? ['success' => session('success')] : [],
+        ]);
     }
 
-    public function create()
+    /*public function create()
     {
         $autores = Autor::all();
         $editoriales = Editorial::all();
-        return view('book.create', compact('autores', 'editoriales'));
-    }
+        return Inertia::render('book/create', [
+            'autores' => $autores,
+            'editoriales' => $editoriales,
+            'errors' => session('errors'),
+        ]);
+    }*/
 
     public function store(Request $request)
     {
@@ -40,13 +49,15 @@ class LibroController extends Controller
         ]);
 
         Libro::create($request->all());
-        return redirect()->route('book.index')->with('success', 'Libro agregado correctamente.');
+        return redirect()->route('book')->with('success', 'Libro agregado correctamente.');
     }
 
     public function show($id)
     {
         $libro = Libro::with(['autor', 'editorial'])->findOrFail($id);
-        return view('book.show', compact('libro'));
+        return Inertia::render('book/show', [
+            'libro' => $libro
+        ]);
     }
 
     public function edit($id)
@@ -54,19 +65,24 @@ class LibroController extends Controller
         $libro = Libro::findOrFail($id);
         $autores = Autor::all();
         $editoriales = Editorial::all();
-        return view('book.edit', compact('libro', 'autores', 'editoriales'));
+        return Inertia::render('book/edit', [
+            'libro' => $libro,
+            'autores' => $autores,
+            'editoriales' => $editoriales,
+            'errors' => session('errors'),
+        ]);
     }
 
     public function update(Request $request, $id)
     {
         $libro = Libro::findOrFail($id);
         $libro->update($request->all());
-        return redirect()->route('book.index')->with('success', 'Libro actualizado correctamente.');
+        return redirect()->route('book')->with('success', 'Libro actualizado correctamente.');
     }
 
     public function destroy($id)
     {
         Libro::destroy($id);
-        return redirect()->route('book.index')->with('success', 'Libro eliminado correctamente.');
+        return redirect()->route('book')->with('success', 'Libro eliminado correctamente.');
     }
 }
