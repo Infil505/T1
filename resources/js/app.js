@@ -17,3 +17,4 @@ createInertiaApp({
     },
     progress: { color: '#4B5563' },
 });
+// import.meta.glob('./Pages/**/*.vue', { eager: true });
