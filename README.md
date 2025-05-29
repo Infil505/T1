@@ -77,7 +77,7 @@ Este es un sistema web desarrollado con Laravel para administrar información re
 
 1. Clonar el repositorio:
    ```bash
-   git clone https://github.com/tu-usuario/tu-repo.git
+   git clone https://github.com/Infil505/T1.git
    cd tu-repo
 
 ##  instalar dependencias
@@ -96,3 +96,7 @@ php artisan migrate
 
 ## lanzar la app
 php artisan serve
+
+## Link de la pagina en linea
+
+https://t1-production-a23d.up.railway.app/
